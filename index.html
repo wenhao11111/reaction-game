@@ -292,15 +292,6 @@
 
 <script>
 (function () {
-  // ── CORS 代理：腾讯云 API 不支持浏览器跨域，通过代理绕过 ──
-  var _xhrOpen = XMLHttpRequest.prototype.open;
-  XMLHttpRequest.prototype.open = function (method, url) {
-    if (typeof url === 'string' && url.indexOf('tcb-api.tencentcloudapi.com') !== -1) {
-      url = 'https://corsproxy.io/?' + encodeURIComponent(url);
-    }
-    return _xhrOpen.apply(this, [method, url].concat([].slice.call(arguments, 2)));
-  };
-
   // ── DOM 引用 ──
   const loginScreen = document.getElementById('login-screen');
   const usernameInput = document.getElementById('username-input');
@@ -326,7 +317,7 @@
   (async function initCloud() {
     try {
       console.log('[TCB] 开始初始化...');
-      const app = tcb.init({ env: TCB_ENV });
+      const app = tcb.init({ env: TCB_ENV, source: 'static' });
       await app.auth().anonymousAuthProvider().signIn();
       console.log('[TCB] 匿名登录成功');
       db = app.database();
