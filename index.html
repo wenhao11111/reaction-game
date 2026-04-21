@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>排名第一作者给你100元</title>
+<script src="cloudbase-bundle.js"></script>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -315,11 +316,8 @@
 
   (async function initCloud() {
     try {
-      console.log('[TCB] 加载 SDK v2...');
-      const cloudbase = await import('https://esm.sh/@cloudbase/js-sdk@2.27.5?bundle');
-      const tcb = cloudbase.default || cloudbase;
-      console.log('[TCB] SDK 加载成功，开始初始化...');
-      const app = tcb.init({ env: TCB_ENV, source: 'static' });
+      console.log('[TCB] 开始初始化...');
+      const app = cloudbase.init({ env: TCB_ENV, source: 'static' });
       await app.auth({ persistence: 'local' }).anonymousAuthProvider().signIn();
       console.log('[TCB] 匿名登录成功');
       db = app.database();
