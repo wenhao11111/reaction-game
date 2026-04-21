@@ -292,17 +292,6 @@
 
 <script>
 (function () {
-  // ── CORS 代理：file:// 协议下绕过跨域限制 ──
-  if (location.protocol === 'file:') {
-    var _xhrOpen = XMLHttpRequest.prototype.open;
-    XMLHttpRequest.prototype.open = function (method, url) {
-      if (typeof url === 'string' && url.indexOf('tcb-api.tencentcloudapi.com') !== -1) {
-        url = 'https://corsproxy.io/?' + encodeURIComponent(url);
-      }
-      return _xhrOpen.apply(this, [method, url].concat([].slice.call(arguments, 2)));
-    };
-  }
-
   // ── DOM 引用 ──
   const loginScreen = document.getElementById('login-screen');
   const usernameInput = document.getElementById('username-input');
